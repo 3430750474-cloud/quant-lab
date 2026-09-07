@@ -1,0 +1,95 @@
+{
+  "id": "l2-07",
+  "course_id": "level-2",
+  "order": 7,
+  "title": "最大回撤",
+  "concepts": ["回撤", "历史高点", "最大回撤", "恢复期", "风险度量"],
+  "simple_explanation": "回撤是当前净值相对历史最高点的下跌幅度，最大回撤是整段历史中最糟的那一次。它衡量策略从高峰跌下来要承受多少损失。",
+  "definition": "时点 t 的回撤等于当前净值相对截止 t 的历史最高净值的下跌比例；最大回撤是这些回撤的最小值（最负值）。最大回撤是路径依赖指标，与收益独立报告。",
+  "analogy": "回撤像登山过程中从当前海拔看走过的最高点差多少；最大回撤则是全程中掉得最深的一次。即使终点海拔很高，中间也可能摔得很重。",
+  "example": "净值序列 1.00、1.10、1.05、1.20、1.10：最高点 1.20 之后跌到 1.10，回撤 = 1.10/1.20 - 1 = -8.33%；若此前 1.10 到 1.05 回撤为 -4.55%，全程最大回撤是 -8.33%。",
+  "formulas": [
+    {
+      "display": "drawdown_t = V_t / peak_t - 1",
+      "variables": [
+        { "symbol": "drawdown_t", "meaning": "t 时点相对历史高点的跌幅", "unit": "小数或%" },
+        { "symbol": "V_t", "meaning": "t 时点净值", "unit": "无" },
+        { "symbol": "peak_t", "meaning": "截至 t 的历史最高净值", "unit": "无" }
+      ]
+    },
+    {
+      "display": "最大回撤 = min_t (drawdown_t)",
+      "variables": [
+        { "symbol": "最大回撤", "meaning": "整个样本中最深的回撤", "unit": "%" },
+        { "symbol": "min_t", "meaning": "对所有时点取最小值", "unit": "无" }
+      ]
+    }
+  ],
+  "algorithm_steps": [
+    "按日期排序净值，并用累计收益生成净值曲线。",
+    "用 cummax 计算每个时点的历史最高净值。",
+    "计算净值除以历史高点减一，得到每日回撤。",
+    "取回撤序列最小值作为最大回撤。",
+    "同时标注最大回撤发生的起止时间，不只看数字。"
+  ],
+  "python_example": {
+    "code": [
+      "import numpy as np",
+      "equity = np.array([1.00, 1.10, 1.05, 1.20, 1.10])",
+      "peak = np.maximum.accumulate(equity)",
+      "drawdown = equity / peak - 1",
+      "max_drawdown = drawdown.min()",
+      "print(f\"max_drawdown={max_drawdown:.2%}\")"
+    ],
+    "explanation": "maximum.accumulate 得到滚动历史高点，再用净值与其比较得到回撤序列。",
+    "output": "max_drawdown=-8.33%"
+  },
+  "interactive_exercises": [
+    {
+      "id": "l2-07-e1",
+      "type": "numeric",
+      "question": "净值从历史最高 1.25 跌到 1.00，回撤是多少？填百分比数值。",
+      "answer": -20,
+      "tolerance": 0.01,
+      "explanation": "1.00 / 1.25 - 1 = -0.20 = -20%。"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "l2-07-q1",
+      "type": "choice",
+      "question": "最大回撤为什么不能只看期末收益？",
+      "options": ["它描述中途最深亏损，路径不同结果不同", "期末收益永远正确", "回撤不影响资金", "两者必然相等"],
+      "answer": 0,
+      "explanation": "相同期末净值可能有完全不同的中间路径与回撤。"
+    },
+    {
+      "id": "l2-07-q2",
+      "type": "choice",
+      "question": "回撤的分母通常是什么？",
+      "options": ["历史最高净值", "初始资金 1 元", "当日成交量", "最大单日亏损"],
+      "answer": 0,
+      "explanation": "回撤是当前净值相对历史高点计算。"
+    },
+    {
+      "id": "l2-07-q3",
+      "type": "numeric",
+      "question": "净值 0.90，历史最高 1.00，回撤为多少？填百分比数值。",
+      "answer": -10,
+      "tolerance": 0.01,
+      "explanation": "0.90 / 1.00 - 1 = -10%。"
+    }
+  ],
+  "common_mistakes": [
+    {
+      "title": "用期初净值计算回撤",
+      "why": "回撤必须相对当时的历史最高点，否则会漏掉先涨后跌。",
+      "avoid": "用 running maximum 计算 peak。"
+    },
+    {
+      "title": "只报最大回撤百分比",
+      "why": "不说明发生时间与持续多久，无法评估能否承受。",
+      "avoid": "报告回撤区间起止日期与恢复所需时间。"
+    }
+  ]
+}

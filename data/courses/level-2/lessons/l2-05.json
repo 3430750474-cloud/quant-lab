@@ -1,0 +1,96 @@
+{
+  "id": "l2-05",
+  "course_id": "level-2",
+  "order": 5,
+  "title": "双均线策略与参数",
+  "concepts": ["双均线", "金叉", "死叉", "滞后信号", "参数过拟合"],
+  "simple_explanation": "双均线策略比较快线与慢线：快线在慢线上方时持有，下方时空仓。参数 N 和 M 决定反应速度，也会被历史数据过度拟合。",
+  "definition": "双均线规则通常使用短周期均线 SMA_fast 与长周期均线 SMA_slow：当快线从下方穿过慢线时产生做多信号，从上方穿过时产生离场信号。信号基于历史收盘价，最早只能在下一交易时段执行。",
+  "analogy": "双均线像判断海流方向的浮标组：小浮标跟着浪快速摆动，大浮标反映更长期水位。小浮标越过长期浮标只是一次规则变化，不代表风向从此固定。",
+  "example": "用 5 日与 20 日均线：若今日收盘后 SMA5=10.6 > SMA20=10.1，则记录为持有多头状态；账户最早 T+1 开盘执行。参数 (5,20) 是设定值，换到 (10,60) 会产生不同历史信号。",
+  "formulas": [
+    {
+      "display": "signal_t = 1 当 SMA_fast_t > SMA_slow_t，否则 0",
+      "variables": [
+        { "symbol": "signal_t", "meaning": "t 收盘后的目标状态，1 为持有", "unit": "0或1" },
+        { "symbol": "SMA_fast_t", "meaning": "短窗口均线", "unit": "元/股" },
+        { "symbol": "SMA_slow_t", "meaning": "长窗口均线", "unit": "元/股" }
+      ]
+    },
+    {
+      "display": "position_t = signal_{t-1}（最早 T+1 执行）",
+      "variables": [
+        { "symbol": "position_t", "meaning": "t 日实际持仓状态", "unit": "0或1" },
+        { "symbol": "signal_{t-1}", "meaning": "上一交易日收盘后产生的信号", "unit": "0或1" }
+      ]
+    }
+  ],
+  "algorithm_steps": [
+    "把价格按交易日排序，取 fast 与 slow 两个窗口。",
+    "计算 SMA_fast 与 SMA_slow，窗口不足时保留空值。",
+    "用收盘后均线比较生成 signal_t。",
+    "用 shift(1) 得到可执行 position_t，禁止同日成交。",
+    "记录参数与信号日期，作为回测输入。"
+  ],
+  "python_example": {
+    "code": [
+      "import pandas as pd",
+      "close = pd.Series([10, 10.2, 10.5, 10.4, 10.9, 11.2, 11.0])",
+      "fast = close.rolling(2).mean()",
+      "slow = close.rolling(4).mean()",
+      "signal = (fast > slow).astype(int)",
+      "position = signal.shift(1)",
+      "print(pd.concat([signal.rename('signal'), position.rename('position')], axis=1).fillna('') )"
+    ],
+    "explanation": "signal 在收盘后生成，position 用 shift(1) 表示最早次日持有，防止未来函数。",
+    "output": "signal position\n0 0\n1 0\n2 1\n3 1\n4 1\n5 1\n6 1"
+  },
+  "interactive_exercises": [
+    {
+      "id": "l2-05-e1",
+      "type": "choice",
+      "question": "今日收盘后快线上穿慢线，最早可以什么时候买入？",
+      "options": ["下一交易日", "今日收盘同时", "今日开盘", "信号日之前"],
+      "answer": 0,
+      "explanation": "收盘后才可知信号，实盘最早是下一交易时段。"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "l2-05-q1",
+      "type": "choice",
+      "question": "参数 (5, 20) 中的 5 通常表示什么？",
+      "options": ["快线均线窗口", "股票池大小", "年化收益率", "最大回撤"],
+      "answer": 0,
+      "explanation": "5 是快均线窗口，20 是慢均线窗口。"
+    },
+    {
+      "id": "l2-05-q2",
+      "type": "choice",
+      "question": "在同一个历史区间试很多组参数并选最好的一组，主要风险是？",
+      "options": ["过拟合历史噪声", "代码编译变慢", "数据量变大", "没有风险"],
+      "answer": 0,
+      "explanation": "参数搜索次数越多，历史最优组合越可能是巧合。"
+    },
+    {
+      "id": "l2-05-q3",
+      "type": "choice",
+      "question": "双均线策略本质上是哪种规则？",
+      "options": ["基于历史价格的趋势跟随规则", "基于公司基本面的规则", "保证盈利的规则", "预测未来消息的规则"],
+      "answer": 0,
+      "explanation": "双均线使用过去价格描述趋势状态，不读取未来信息。"
+    }
+  ],
+  "common_mistakes": [
+    {
+      "title": "用当日收盘价成交",
+      "why": "收盘价未形成时无法下单，等同未来函数。",
+      "avoid": "信号 shift 一期，最早下一交易日成交。"
+    },
+    {
+      "title": "只报告最优参数回测",
+      "why": "试错过程被隐藏会让结果看起来稳定。",
+      "avoid": "同时展示参数敏感性与样本外结果。"
+    }
+  ]
+}

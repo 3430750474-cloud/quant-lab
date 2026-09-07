@@ -1,0 +1,17 @@
+{
+  "id": "level-7",
+  "title": "Level 7 · 因子研究",
+  "short_title": "因子研究",
+  "level": 7,
+  "status": "planned",
+  "description": "研究可解释的选股因子，验证分层收益、稳定性和数据缺口。",
+  "prerequisites": ["回测"],
+  "planned_topics": [
+    "因子定义与计算",
+    "因子中性化",
+    "IC 与分层回测",
+    "因子拥挤与衰减",
+    "幸存者偏差检查",
+    "因子研究报告"
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "id": "l2-04",
+  "course_id": "level-2",
+  "order": 4,
+  "title": "移动平均线",
+  "concepts": ["SMA", "EMA", "窗口", "均线", "滞后"],
+  "simple_explanation": "移动平均把过去 N 个价格压成一个平滑值，用来观察趋势方向；它天生滞后，不能预测未来。",
+  "definition": "简单移动平均（SMA）是过去 N 期收盘价的算术平均；指数移动平均（EMA）给近期价格更高权重。均线是价格的滞后函数，是描述性指标而不是预测工具。",
+  "analogy": "均线像车窗后视镜：能看到走过的路是否平滑向上，但看到的是已经发生的轨迹；镜子不会告诉你下一秒路上有没有坑。",
+  "example": "最近 5 个收盘价为 10、10.5、10.3、10.8、11，SMA5 = (10+10.5+10.3+10.8+11)/5 = 10.52。若下一日价格跌到 10.2，SMA5 会更新并去掉最旧值。",
+  "formulas": [
+    {
+      "display": "SMA_t = (P_{t-N+1} + ... + P_t) / N",
+      "variables": [
+        { "symbol": "SMA_t", "meaning": "t 日 N 期简单移动平均", "unit": "元/股" },
+        { "symbol": "P_{t-i}", "meaning": "t-i 日收盘价", "unit": "元/股" },
+        { "symbol": "N", "meaning": "移动平均窗口长度", "unit": "期" }
+      ]
+    },
+    {
+      "display": "EMA_t = α × P_t + (1 - α) × EMA_{t-1}",
+      "variables": [
+        { "symbol": "EMA_t", "meaning": "t 日指数移动平均", "unit": "元/股" },
+        { "symbol": "α", "meaning": "平滑系数，常取 2/(N+1)", "unit": "0到1" },
+        { "symbol": "P_t", "meaning": "t 日价格", "unit": "元/股" },
+        { "symbol": "EMA_{t-1}", "meaning": "上一日指数移动平均", "unit": "元/股" }
+      ]
+    }
+  ],
+  "algorithm_steps": [
+    "取复权收盘价并按交易日排序。",
+    "SMA 用滚动窗口均值；窗口不足 N 期时输出空值。",
+    "EMA 需指定初始值与平滑系数，并按时间顺序迭代。",
+    "把均线与价格同日期对齐，注意前 N-1 期为空值。",
+    "只把均线作为规则输入，不做未来外推。"
+  ],
+  "python_example": {
+    "code": [
+      "import pandas as pd",
+      "close = pd.Series([10.0, 10.5, 10.3, 10.8, 11.0])",
+      "sma5 = close.rolling(5).mean()",
+      "ema3 = close.ewm(span=3, adjust=False).mean()",
+      "print(sma5.round(3).to_string())",
+      "print(ema3.round(3).to_string())"
+    ],
+    "explanation": "rolling 计算简单窗口均值，ewm 计算指数加权；需要记录窗口与基准口径。",
+    "output": "0 NaN\n1 NaN\n2 NaN\n3 NaN\n4 10.52"
+  },
+  "interactive_exercises": [
+    {
+      "id": "l2-04-e1",
+      "type": "numeric",
+      "question": "收盘价为 4、6、8，3 期简单均线是多少？",
+      "answer": 6,
+      "tolerance": 0.01,
+      "explanation": "(4 + 6 + 8) / 3 = 6。"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "l2-04-q1",
+      "type": "choice",
+      "question": "SMA 窗口 N 越大通常意味着什么？",
+      "options": ["曲线越平滑、对最新价格反应越慢", "曲线越不平滑", "反应越快", "数据越少"],
+      "answer": 0,
+      "explanation": "窗口越大，单个最新价格占比越低，曲线更平滑但更滞后。"
+    },
+    {
+      "id": "l2-04-q2",
+      "type": "choice",
+      "question": "EMA 与 SMA 的主要区别是？",
+      "options": ["EMA 给近期价格更高权重", "EMA 不依赖价格", "SMA 不含历史价格", "没有区别"],
+      "answer": 0,
+      "explanation": "EMA 通过平滑系数给近期数据更高权重。"
+    },
+    {
+      "id": "l2-04-q3",
+      "type": "choice",
+      "question": "移动平均可以做到什么？",
+      "options": ["描述已发生价格的平滑水平", "预测明日精确价格", "消除全部风险", "改变成交量"],
+      "answer": 0,
+      "explanation": "均线是滞后描述指标，不做预测承诺。"
+    }
+  ],
+  "common_mistakes": [
+    {
+      "title": "窗口不足时把空值填成 0",
+      "why": "0 会制造虚假低均线并破坏信号。",
+      "avoid": "用空值保留真实缺口，直到窗口填满。"
+    },
+    {
+      "title": "把均线交叉称为必然反转信号",
+      "why": "均线交叉只是规则触发，不代表未来方向确定。",
+      "avoid": "把信号写为“触发”而不是“预言”。"
+    }
+  ]
+}

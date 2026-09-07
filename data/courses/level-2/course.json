@@ -1,0 +1,10 @@
+{
+  "id": "level-2",
+  "title": "Level 2 · 量化基础",
+  "short_title": "量化基础",
+  "level": 2,
+  "status": "published",
+  "description": "把投资观点转成假设、公式、算法与可验证流程，并认识收益、风险、回测指标和常见研究陷阱。",
+  "prerequisites": ["股票基础"],
+  "planned_topics": []
+}

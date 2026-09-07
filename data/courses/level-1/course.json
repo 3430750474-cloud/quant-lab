@@ -1,0 +1,10 @@
+{
+  "id": "level-1",
+  "title": "Level 1 · 股票基础",
+  "short_title": "股票基础",
+  "level": 1,
+  "status": "published",
+  "description": "从股票与股东概念出发，建立行情字段、交易规则、交易成本、收益与风险的语言体系。",
+  "prerequisites": [],
+  "planned_topics": []
+}

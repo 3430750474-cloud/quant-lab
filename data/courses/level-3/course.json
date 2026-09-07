@@ -1,0 +1,18 @@
+{
+  "id": "level-3",
+  "title": "Level 3 · Python 与数据分析",
+  "short_title": "Python 与数据分析",
+  "level": 3,
+  "status": "planned",
+  "description": "学习用 Python、pandas 与 numpy 处理行情数据并建立可复现的分析脚本。",
+  "prerequisites": ["量化基础"],
+  "planned_topics": [
+    "Python 环境与可复现工程结构",
+    "Series 与 DataFrame 基础",
+    "缺失值与数据类型处理",
+    "时间序列索引与重采样",
+    "分组、合并与透视",
+    "绘图与结果解释",
+    "函数、测试与代码规范"
+  ]
+}

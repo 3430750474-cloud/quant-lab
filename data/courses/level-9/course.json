@@ -1,0 +1,16 @@
+{
+  "id": "level-9",
+  "title": "Level 9 · AI 量化研究",
+  "short_title": "AI 量化研究",
+  "level": 9,
+  "status": "planned",
+  "description": "把 AI 助手接入课程与研究流程，辅助写作假设、检查代码、审阅报告，不替代验证。",
+  "prerequisites": ["机器学习"],
+  "planned_topics": [
+    "研究问题到实验登记",
+    "AI 辅助代码审阅",
+    "结果复核清单",
+    "研究报告与证据分级",
+    "系统化失败分析与迭代"
+  ]
+}

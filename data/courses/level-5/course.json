@@ -1,0 +1,17 @@
+{
+  "id": "level-5",
+  "title": "Level 5 · 量化策略",
+  "short_title": "量化策略",
+  "level": 5,
+  "status": "planned",
+  "description": "把双均线、动量、均值回归等交易想法写成明确假设、参数与规则。",
+  "prerequisites": ["统计学"],
+  "planned_topics": [
+    "策略假设模板",
+    "趋势跟踪与双均线",
+    "横截面动量",
+    "均值回归",
+    "参数与敏感性",
+    "策略失效与状态监控"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "level-4",
+  "title": "Level 4 · 统计学",
+  "short_title": "统计学",
+  "level": 4,
+  "status": "planned",
+  "description": "理解描述统计、概率分布、相关性、假设检验与回归，并区分统计显著与真实有效。",
+  "prerequisites": ["Python 与数据分析"],
+  "planned_topics": [
+    "样本、总体与描述统计",
+    "正态分布与偏度峰度",
+    "协方差与相关性",
+    "假设检验与 p 值",
+    "线性回归与残差",
+    "统计陷阱与多重检验"
+  ]
+}
