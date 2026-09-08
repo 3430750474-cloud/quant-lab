@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>清理进度</title>
+<body style="font-family:sans-serif;padding:20px">
+<script>
+  localStorage.removeItem("quantlab-static-progress-v1");
+  document.body.textContent = "已清理本浏览器保存的 Quant Lab 进度";
+</script>

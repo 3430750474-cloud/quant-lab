@@ -2,6 +2,14 @@
 
 Quant Lab 使用模板中的“GitHub Pages + Cloudflare Workers”架构上线，不需要云服务器。
 
+## 当前公开版
+
+公网地址：`https://3430750474-cloud.github.io/quant-lab/`
+
+当前 `deploy/public` 使用纯静态模式：课程、测验判分与学习进度都可在手机浏览器直接运行，进度保存在该浏览器的 `localStorage`。此模式不依赖 Cloudflare，国内网络可直接访问 GitHub Pages。
+
+Cloudflare Worker（`deploy/worker`）仍保留服务端判分与 KV 跨设备进度方案；如果以后有可访问的自定义域名，可把 `deploy/public/index.html` 中的 `__STATIC_API` 关闭并填写 Worker 地址，再切回服务端模式。
+
 ## 1. 静态网页（GitHub Pages）
 
 1. 在 GitHub 新建一个公开仓库，例如 `quant-lab`。

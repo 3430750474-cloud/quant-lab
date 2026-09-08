@@ -2,6 +2,8 @@
 
 面向量化新手的个人中文量化学习平台。M1 先交付课程体系与学习进度，数据实验室、策略实验室、回测中心、AI 研究助手按后续里程碑逐步开放。
 
+公网地址（GitHub Pages）：`https://3430750474-cloud.github.io/quant-lab/`
+
 ## 运行
 
 ```powershell
