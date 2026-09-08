@@ -1,4 +1,8 @@
 export async function api(path, options = {}) {
+  if (window.__STATIC_API) {
+    const staticApiModule = await import("./static-api.js");
+    return staticApiModule.staticApi(path, options);
+  }
   const apiBase = (window.__API_BASE || "").replace(/\/+$/, "");
   const init = {
     headers: { "Content-Type": "application/json" },

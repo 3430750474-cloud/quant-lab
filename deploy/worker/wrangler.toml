@@ -3,9 +3,6 @@ main = "index.js"
 compatibility_date = "2025-08-01"
 workers_dev = true
 
-# 如需跨设备同步学习进度，请在 wrangler login 后执行：
-#   wrangler kv namespace create QUANTLAB_KV
-# 然后把返回的 id 填入下面的占位符并取消注释：
-# [[kv_namespaces]]
-# binding = "QUANTLAB_KV"
-# id = "填入KV命名空间ID"
+[[kv_namespaces]]
+binding = "QUANTLAB_KV"
+id = "dbf27e71a6be4371b9e5c5b46432eebb"

@@ -1,0 +1,14 @@
+{
+  "name": "quant-lab-worker",
+  "private": true,
+  "devDependencies": {
+    "wrangler": "^3.114.17"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "workerd",
+      "sharp"
+    ]
+  }
+}
